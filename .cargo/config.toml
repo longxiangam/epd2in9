@@ -1,0 +1,25 @@
+[source.crates-io]
+registry = "https://github.com/rust-lang/crates.io-index"
+replace-with = 'ustc'
+
+[source.ustc]
+registry = "git://mirrors.ustc.edu.cn/crates.io-index"
+#registry = "https://mirrors.ustc.edu.cn/crates.io-index"
+
+[http]
+#check-revoke = false
+
+[target.riscv32imc-unknown-none-elf]
+runner = "espflash flash --monitor -p COM8"
+
+[build]
+rustflags = [
+  "-C", "link-arg=-Tlinkall.x",
+  "-C", "link-arg=-Trom-functions.x",
+
+]
+
+target = "riscv32imc-unknown-none-elf"
+
+[unstable]
+build-std = ["core"]
