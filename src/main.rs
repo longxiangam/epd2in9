@@ -97,7 +97,7 @@ fn main() -> ! {
     let busy_in = io.pins.gpio11.into_pull_up_input();
 
     let mut epd = Epd2in9::new(&mut spi, epd_cs, busy_in, epd_dc, epd_rst, &mut delay).unwrap();
-    let mut vec = vec![Button::new()];
+
 
     loop {
         /*  led2.toggle().unwrap();*/

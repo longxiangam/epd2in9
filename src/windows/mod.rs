@@ -1,6 +1,6 @@
-use alloc::vec::Vec;
-use crate::widgets::{Button, Widget};
+use alloc::boxed::Box;
+use crate::widgets::{Widget};
 
 pub struct Window{
-    pub widgets:Vec<dyn Widget>
+    pub widgets:[Box<dyn Widget>]
 }
