@@ -6,5 +6,5 @@ pub struct Wrap{
     position:Point,
     width:i32,
     height:i32,
-    child:[Box<dyn Widget>]
+    children:[Box<dyn Widget>]
 }
