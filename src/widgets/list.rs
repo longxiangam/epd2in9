@@ -10,6 +10,7 @@ pub struct  List<'a>{
 }
 
 pub struct  ListRow<'a>{
+    active:bool,
     height:i32,
     text:& 'a str,
 }

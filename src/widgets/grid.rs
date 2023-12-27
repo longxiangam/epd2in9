@@ -12,6 +12,7 @@ pub struct  Grid<'a>{
 
 
 pub struct  GridCell<'a>{
+    active:bool,
     width:i32,
     height:i32,
     text:& 'a str,
