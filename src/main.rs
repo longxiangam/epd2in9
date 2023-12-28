@@ -1,9 +1,10 @@
 #![no_std]
 #![no_main]
-
+#![feature(generic_const_exprs)]
 
 extern crate alloc;
 
+use alloc::rc::Rc;
 use alloc::vec;
 use core::cell::RefCell;
 
@@ -29,6 +30,7 @@ use embedded_graphics::{
 };
 
 use hal::system::Peripheral;
+use crate::app::MainApp;
 
 
 pub mod widgets;
@@ -97,9 +99,9 @@ fn main() -> ! {
     let busy_in = io.pins.gpio11.into_pull_up_input();
 
     let mut epd = Epd2in9::new(&mut spi, epd_cs, busy_in, epd_dc, epd_rst, &mut delay).unwrap();
-
-
+    let mut MAIN_APP: Rc<MainApp> =  crate::app::MainApp::new();
     loop {
+        MAIN_APP.run();
         /*  led2.toggle().unwrap();*/
         delay.delay_ms(500u32);
     }

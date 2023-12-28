@@ -1,6 +1,6 @@
 
-use crate::widgets::Point;
-
+use crate::widgets::{Point, Widget};
+#[derive(Copy, Clone)]
 pub struct Label<'a> {
     position:Point,
     width:i32,
@@ -14,5 +14,11 @@ impl <'a> Label<'a>{
             width,
             text
         }
+    }
+}
+
+impl <'a> Widget for Label<'a>{
+    fn draw(&self) {
+        todo!()
     }
 }

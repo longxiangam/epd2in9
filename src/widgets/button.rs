@@ -1,6 +1,6 @@
 use crate::widgets::Point;
 
-
+#[derive(Copy, Clone)]
 pub struct  Button<'a>{
     position:Point,
     width:i32,

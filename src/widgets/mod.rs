@@ -1,11 +1,12 @@
 use embedded_graphics_core::geometry::Point;
-mod label;
-mod button;
-mod grid;
-mod list;
-mod wrap;
+pub mod label;
+pub mod button;
+pub mod grid;
+pub mod list;
+pub mod wrap;
 
 
-pub trait  Widget{
+
+pub trait  Widget :Copy{
     fn draw(&self);
 }
