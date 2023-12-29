@@ -102,8 +102,8 @@ fn main() -> ! {
     let busy_in = io.pins.gpio11.into_pull_up_input();
 
     let mut epd = Epd2in9::new(&mut spi, epd_cs, busy_in, epd_dc, epd_rst, &mut delay).unwrap();
-    let mut MAIN_APP: MainApp =  crate::app::MainApp::new();
-    let rc = Rc::new(RefCell::new(MAIN_APP));
+    let mut main_app: MainApp =  crate::app::MainApp::new();
+    let rc = Rc::new(RefCell::new(main_app));
 
     let window = Box::new(MenuWindow::new(rc.clone(), crate::app::SCREEN_WIDTH, crate::app::SCREEN_HEIGHT));
 

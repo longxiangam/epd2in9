@@ -14,7 +14,6 @@ pub struct ClockWindow<'a>{
 
 impl <'a> ClockWindow<'a> where 'a:'static{
     pub fn new(app: Rc<RefCell<MainApp<'a>>>, width:i32, height:i32) -> ClockWindow<'a>
-
     {
 
         let mut root = Wrap::new(Point::new(0,0),width,height);
@@ -44,7 +43,5 @@ impl <'a> Window<'a> for ClockWindow<'a>{
 
     }
 
-    /*    fn listen_event(&self, callback: impl FnOnce()) {
-            callback();
-        }*/
+
 }
