@@ -32,13 +32,14 @@ use embedded_graphics::{
 
 use hal::system::Peripheral;
 use crate::app::MainApp;
-use crate::windows::MenuWindow;
+use crate::windows::menu_window::MenuWindow;
 
 
 pub mod widgets;
 mod windows;
 mod events;
 mod app;
+mod driver;
 
 
 static BUTTON: Mutex<RefCell<Option<Gpio0<Input<PullDown>>>>> = Mutex::new(RefCell::new(None));

@@ -1,6 +1,6 @@
 
 use crate::widgets::{Point, Widget};
-#[derive(Copy, Clone)]
+
 pub struct Label<'a> {
     position:Point,
     width:i32,

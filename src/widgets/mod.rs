@@ -1,5 +1,6 @@
 use embedded_graphics_core::geometry::Point;
-/*pub mod label;
+pub mod label;
+/*
 pub mod button;
 pub mod grid;
 pub mod list;*/

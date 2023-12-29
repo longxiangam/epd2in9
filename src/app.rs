@@ -7,7 +7,7 @@ use embedded_graphics_core::prelude::Point;
 
 use crate::widgets::Widget;
 use crate::widgets::wrap::Wrap;
-use crate::windows::{MenuWindow, Window};
+use crate::windows::{menu_window::MenuWindow, Window};
 
 pub const SCREEN_WIDTH:i32 = 400;
 pub const SCREEN_HEIGHT:i32 = 300;
@@ -31,7 +31,7 @@ impl <'a> MainApp<'a>{
     }
 
 
-    pub  fn top_window(&mut self) -> &mut Box<dyn Window<'a>> {
+    pub  fn top_window(&mut self) -> &mut Box<(dyn Window<'a>)> {
         if let Some(last_window) = self.window_stack.last_mut() {
             return last_window;
         } else {
@@ -40,7 +40,7 @@ impl <'a> MainApp<'a>{
         }
     }
 
-    pub  fn push(&mut self, window: Box<dyn Window<'a> >){
+    pub  fn push(&mut self, window:Box<(dyn Window<'a>)>) {
         self.window_stack.push(window);
         //重绘
         self.need_render = true;
@@ -60,15 +60,14 @@ impl <'a> MainApp<'a>{
         self.is_pause = false;
     }
 
-    pub   fn run(&mut self)->!{
-        while self.is_pause {
+    pub   fn run(&mut self){
+        if !self.is_pause {
             if self.need_render {
                 self.top_window().draw();
             }
 
             self.top_window().run();
         }
-        loop{}
     }
 }
 
