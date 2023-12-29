@@ -4,37 +4,34 @@ use alloc::vec;
 use alloc::vec::Vec;
 use core::ops::Deref;
 use embedded_graphics_core::prelude::Point;
-use crate::widgets::label::Label;
+
 use crate::widgets::Widget;
 use crate::widgets::wrap::Wrap;
 use crate::windows::{MenuWindow, Window};
 
-const SCREEN_WIDTH:i32 = 400;
-const SCREEN_HEIGHT:i32 = 300;
+pub const SCREEN_WIDTH:i32 = 400;
+pub const SCREEN_HEIGHT:i32 = 300;
 
-#[derive(Copy, Clone)]
-pub struct MainApp{
-    window_stack:Vec<Box<dyn Window> >,
+
+pub struct MainApp<'a>{
+    window_stack:Vec<Box<dyn  Window<'a>> >,
     need_render:bool,
     is_pause:bool,
 }
 
-impl MainApp{
-    pub fn new() -> Rc<MainApp> {
+impl <'a> MainApp<'a>{
+    pub fn new() -> MainApp<'a> {
        let mut app = Self{
             window_stack:vec![],
             need_render:true,
             is_pause:false,
         };
-        let rc = Rc::new(app);
+        app
 
-        app.push(Box::new( MenuWindow::new(rc.clone(),SCREEN_WIDTH,SCREEN_HEIGHT)));
-
-        rc.clone()
     }
 
 
-    pub  fn top_window(&mut self) -> &mut Box<dyn Window> {
+    pub  fn top_window(&mut self) -> &mut Box<dyn Window<'a>> {
         if let Some(last_window) = self.window_stack.last_mut() {
             return last_window;
         } else {
@@ -43,7 +40,7 @@ impl MainApp{
         }
     }
 
-    pub  fn push(&mut self,window: Box<dyn Window>){
+    pub  fn push(&mut self, window: Box<dyn Window<'a> >){
         self.window_stack.push(window);
         //重绘
         self.need_render = true;

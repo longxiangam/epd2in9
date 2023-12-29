@@ -4,7 +4,7 @@ use alloc::vec::Vec;
 use embedded_graphics_core::geometry::Point;
 use crate::widgets::Widget;
 
-#[derive( Clone)]
+
 pub struct Wrap{
     position:Point,
     width:i32,
@@ -25,16 +25,7 @@ impl Wrap{
         self.children.push(child);
     }
 }
-impl Clone for Wrap {
-    fn clone(&self) -> Self {
-        Wrap {
-            position: self.position,
-            width: self.width,
-            height: self.height,
-            children: self.children.clone(),
-        }
-    }
-}
+
 
 
 

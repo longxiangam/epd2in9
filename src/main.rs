@@ -4,6 +4,7 @@
 
 extern crate alloc;
 
+use alloc::boxed::Box;
 use alloc::rc::Rc;
 use alloc::vec;
 use core::cell::RefCell;
@@ -31,6 +32,7 @@ use embedded_graphics::{
 
 use hal::system::Peripheral;
 use crate::app::MainApp;
+use crate::windows::MenuWindow;
 
 
 pub mod widgets;
@@ -99,9 +101,15 @@ fn main() -> ! {
     let busy_in = io.pins.gpio11.into_pull_up_input();
 
     let mut epd = Epd2in9::new(&mut spi, epd_cs, busy_in, epd_dc, epd_rst, &mut delay).unwrap();
-    let mut MAIN_APP: Rc<MainApp> =  crate::app::MainApp::new();
+    let mut MAIN_APP: MainApp =  crate::app::MainApp::new();
+    let rc = Rc::new(RefCell::new(MAIN_APP));
+
+    let window = Box::new(MenuWindow::new(rc.clone(), crate::app::SCREEN_WIDTH, crate::app::SCREEN_HEIGHT));
+
+    rc.clone().borrow_mut().push(window);
+
     loop {
-        MAIN_APP.run();
+        rc.clone().borrow_mut().run();
         /*  led2.toggle().unwrap();*/
         delay.delay_ms(500u32);
     }

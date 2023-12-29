@@ -1,21 +1,22 @@
 use alloc::boxed::Box;
 use alloc::rc::Rc;
+use core::cell::RefCell;
 use embedded_graphics_core::prelude::Point;
 use crate::app::MainApp;
-use crate::widgets::label::Label;
+
 use crate::widgets::wrap::Wrap;
 
-pub struct MenuWindow{
+pub struct MenuWindow<'a>{
     pub root: Wrap,
-    pub app:Rc<MainApp>,
+    pub app:Rc<RefCell<MainApp<'a>>> ,
 }
 
-impl MenuWindow{
-    pub fn new(app: Rc<MainApp>, width:i32, height:i32) -> Self{
+impl <'a> MenuWindow<'a>{
+    pub fn new(app: Rc<RefCell<MainApp<'a>>>, width:i32, height:i32) -> MenuWindow<'a>{
 
 
         let mut root = Wrap::new(Point::new(0,0),width,height);
-        root.add_child(Box::new(Label::new(Point::new(10,10),100,"测试label")));
+        //root.add_child(Box::new(Label::new(Point::new(10,10),100,"测试label")));
 
         Self{
             root,
@@ -25,15 +26,10 @@ impl MenuWindow{
 
 }
 
-impl Clone for MenuWindow {
-    fn clone(&self) -> Self {
-        todo!()
-    }
-}
 
-impl Copy for MenuWindow {}
 
-impl Window for MenuWindow{
+
+impl <'a> Window<'a> for MenuWindow<'a>{
     fn run(&self) {
         todo!()
     }
@@ -47,7 +43,7 @@ impl Window for MenuWindow{
     }*/
 }
 
-pub(crate) trait Window : Copy{
+pub(crate) trait Window<'a> {
     fn run(&self);
 
     fn draw(&self);
