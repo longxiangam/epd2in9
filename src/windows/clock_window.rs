@@ -1,19 +1,21 @@
 use alloc::boxed::Box;
 use alloc::rc::Rc;
 use core::cell::RefCell;
+use embedded_graphics_core::draw_target::DrawTarget;
 use embedded_graphics_core::geometry::Point;
+use embedded_graphics_core::pixelcolor::BinaryColor;
 use crate::app::MainApp;
 use crate::widgets::label::Label;
 use crate::widgets::wrap::Wrap;
 use crate::windows::Window;
 extern crate alloc;
-pub struct ClockWindow<'a>{
+pub struct ClockWindow<'a,D> where D: DrawTarget<Color = BinaryColor>{
     pub root: Wrap,
-    pub app:Rc<RefCell<MainApp<'a>>> ,
+    pub app:Rc<RefCell<MainApp<'a,D>>> ,
 }
 
-impl <'a> ClockWindow<'a> where 'a:'static{
-    pub fn new(app: Rc<RefCell<MainApp<'a>>>, width:i32, height:i32) -> ClockWindow<'a>
+impl <'a,D> ClockWindow<'a,D> where 'a:'static,D: DrawTarget<Color =BinaryColor> {
+    pub fn new(app: Rc<RefCell<MainApp<'a,D>>>, width:i32, height:i32) -> ClockWindow<'a,D>
     {
 
         let mut root = Wrap::new(Point::new(0,0),width,height);
@@ -34,7 +36,7 @@ impl <'a> ClockWindow<'a> where 'a:'static{
 
 
 
-impl <'a> Window<'a> for ClockWindow<'a>{
+impl <'a,D> Window<'a> for ClockWindow<'a,D>  where D: DrawTarget<Color = BinaryColor> {
     fn run(&self) {
         todo!()
     }

@@ -15,7 +15,7 @@ use epd2in9::windows::menu_window::MenuWindow;
 fn main() -> Result<(), core::convert::Infallible> {
     let mut display: SimulatorDisplay<BinaryColor> = SimulatorDisplay::new(Size::new(256, 128));
 
-    let style = MonoTextStyleBuilder::new()
+/*    let style = MonoTextStyleBuilder::new()
         .font(&FONT_6X9)
         .text_color(BinaryColor::On)
         .background_color(BinaryColor::Off)
@@ -26,17 +26,17 @@ fn main() -> Result<(), core::convert::Infallible> {
         Point::new(15, 15),
         style,
     )
-        .draw(&mut display)?;
+        .draw(&mut display)?;*/
 
 
-    let mut main_app: MainApp =  crate::MainApp::new();
+    let mut main_app =  crate::MainApp::new(display.clone());
     let rc = Rc::new(RefCell::new(main_app));
 
     let window = Box::new(MenuWindow::new(rc.clone(), epd2in9::app::SCREEN_WIDTH, epd2in9::app::SCREEN_HEIGHT));
 
     rc.clone().borrow_mut().push(window);
 
-    let event_listener:EventListener = EventListener{app:rc.clone()};
+    //let event_listener:EventListener = EventListener{app:rc.clone()};
 
 
       //  rc.clone().borrow_mut().run();

@@ -3,6 +3,7 @@ use alloc::boxed::Box;
 use alloc::vec;
 use alloc::vec::Vec;
 use core::cell::RefCell;
+use embedded_graphics_core::pixelcolor::BinaryColor;
 use embedded_graphics_core::prelude::DrawTarget;
 
 
@@ -12,18 +13,20 @@ pub const SCREEN_WIDTH:i32 = 400;
 pub const SCREEN_HEIGHT:i32 = 300;
 
 
-pub struct MainApp<'a>{
-    window_stack:Vec<Box<dyn  Window<'a>> >,
-    need_render:bool,
-    is_pause:bool,
+pub struct MainApp<'a,D> where D: DrawTarget<Color = BinaryColor>{
+    pub  window_stack:Vec<Box<dyn  Window<'a>> >,
+    pub need_render:bool,
+    pub is_pause:bool,
+    pub  display:D
 }
 
-impl <'a> MainApp<'a>{
-    pub fn new() -> MainApp<'a> {
-       let mut app = Self{
+impl <'a,D> MainApp<'a,D>  where D: DrawTarget<Color = BinaryColor> {
+    pub fn new(display:D) -> MainApp<'a,D> {
+        let mut app = Self{
             window_stack:vec![],
             need_render:true,
             is_pause:false,
+            display,
         };
         app
 
