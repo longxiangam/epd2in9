@@ -14,7 +14,7 @@ pub const SCREEN_HEIGHT:i32 = 300;
 
 
 pub struct MainApp<'a,D> where D: DrawTarget<Color = BinaryColor>{
-    pub  window_stack:Vec<Box<dyn  Window<'a>> >,
+    pub  window_stack:Vec<Box<dyn  Window<'a, D>> >,
     pub need_render:bool,
     pub is_pause:bool,
     pub  display:D
@@ -33,7 +33,7 @@ impl <'a,D> MainApp<'a,D>  where D: DrawTarget<Color = BinaryColor> {
     }
 
 
-    pub  fn top_window(&mut self) -> &mut Box<(dyn Window<'a>)> {
+    pub  fn top_window(&mut self) -> &mut Box<(dyn Window<'a, D>)> {
         if let Some(last_window) = self.window_stack.last_mut() {
             return last_window;
         } else {
@@ -42,7 +42,7 @@ impl <'a,D> MainApp<'a,D>  where D: DrawTarget<Color = BinaryColor> {
         }
     }
 
-    pub  fn push(&mut self, window:Box<(dyn Window<'a>)>) {
+    pub  fn push(&mut self, window:Box<(dyn Window<'a, D>)>) {
         self.window_stack.push(window);
         //重绘
         self.need_render = true;
@@ -65,10 +65,11 @@ impl <'a,D> MainApp<'a,D>  where D: DrawTarget<Color = BinaryColor> {
     pub fn run(&mut self){
         if !self.is_pause {
             if self.need_render {
-                self.top_window().draw();
+                let window = self.top_window();
+                window.draw(&mut self.display);
             }
 
-            self.top_window().run();
+            //self.top_window().run();
         }
     }
 }

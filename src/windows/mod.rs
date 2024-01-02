@@ -7,10 +7,10 @@ pub mod menu_window;
 pub mod clock_window;
 
 
-pub  trait Window<'a> {
-    fn run(&self) ;
+pub  trait Window<'a,D> where D: DrawTarget<Color =BinaryColor>{
+    fn run(&self, display: &mut D)  ;
 
-    fn draw(&self);
+    fn draw(&self,display: &mut D);
 
     fn process_event(&self,event_type: EventType){}
 

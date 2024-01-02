@@ -36,12 +36,12 @@ impl <'a,D> ClockWindow<'a,D> where 'a:'static,D: DrawTarget<Color =BinaryColor>
 
 
 
-impl <'a,D> Window<'a> for ClockWindow<'a,D>  where D: DrawTarget<Color = BinaryColor> {
-    fn run(&self) {
+impl <'a,D> Window<'a, D> for ClockWindow<'a,D>  where D: DrawTarget<Color = BinaryColor> {
+    fn run(&self,display: &mut  D) {
         todo!()
     }
 
-    fn draw(&self) {
+    fn draw(&self,display:&mut D) {
 
     }
 

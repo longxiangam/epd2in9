@@ -40,7 +40,7 @@ impl <'a,D> MenuWindow<'a,D> where 'a:'static,D: DrawTarget<Color = BinaryColor>
     }
 
     fn to_clock(&self){
-        let window:Box<dyn Window<'a>> = Box::new(ClockWindow::new(self.app.clone(), crate::app::SCREEN_WIDTH, crate::app::SCREEN_HEIGHT));
+        let window:Box<dyn Window<'a, D>> = Box::new(ClockWindow::new(self.app.clone(), crate::app::SCREEN_WIDTH, crate::app::SCREEN_HEIGHT));
         self.app.borrow_mut().push(window);
     }
 
@@ -49,8 +49,8 @@ impl <'a,D> MenuWindow<'a,D> where 'a:'static,D: DrawTarget<Color = BinaryColor>
 
 
 
-impl <'a,D> Window<'a> for MenuWindow<'a,D>  where D: DrawTarget<Color =BinaryColor> {
-    fn run(&self) {
+impl <'a,D> Window<'a, D> for MenuWindow<'a,D>  where D: DrawTarget<Color =BinaryColor> {
+    fn run(&self, display:&mut D) {
         let style = MonoTextStyleBuilder::new()
             .font(&FONT_6X9)
             .text_color(BinaryColor::On)
@@ -62,10 +62,10 @@ impl <'a,D> Window<'a> for MenuWindow<'a,D>  where D: DrawTarget<Color =BinaryCo
             Point::new(15, 15),
             style,
         )
-            .draw(&mut self.app.clone().borrow_mut().display);//.expect("绘制失败");
+            .draw(display);//.expect("绘制失败");
     }
 
-    fn draw(&self) {
+    fn draw(&self,display:&mut D) {
 
     }
 
