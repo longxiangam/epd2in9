@@ -3,7 +3,7 @@ use alloc::vec;
 use alloc::vec::Vec;
 use embedded_graphics_core::geometry::Point;
 use crate::widgets::Widget;
-
+extern crate alloc;
 
 pub struct Wrap{
     position:Point,

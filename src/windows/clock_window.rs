@@ -6,7 +6,7 @@ use crate::app::MainApp;
 use crate::widgets::label::Label;
 use crate::widgets::wrap::Wrap;
 use crate::windows::Window;
-
+extern crate alloc;
 pub struct ClockWindow<'a>{
     pub root: Wrap,
     pub app:Rc<RefCell<MainApp<'a>>> ,

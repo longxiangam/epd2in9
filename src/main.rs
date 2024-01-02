@@ -32,6 +32,7 @@ use embedded_graphics::{
 
 use hal::system::Peripheral;
 use crate::app::MainApp;
+use crate::events::EventListener;
 use crate::windows::menu_window::MenuWindow;
 
 
@@ -109,9 +110,10 @@ fn main() -> ! {
 
     rc.clone().borrow_mut().push(window);
 
+    let event_listener:EventListener = EventListener{app:rc.clone()};
+
     loop {
         rc.clone().borrow_mut().run();
-        /*  led2.toggle().unwrap();*/
         delay.delay_ms(500u32);
     }
 }

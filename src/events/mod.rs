@@ -1,8 +1,11 @@
-use alloc::boxed::Box;
-use alloc::vec::Vec;
-use core::iter::Map;
-use crate::windows::Window;
 
+use alloc::rc::Rc;
+
+use core::cell::RefCell;
+
+use crate::app::MainApp;
+use crate::windows::Window;
+extern crate alloc;
 pub enum  EventType{
     ButtonAShort,
     ButtonADouble,
@@ -13,12 +16,17 @@ pub enum  EventType{
 }
 
 
-pub struct EventQueue<'a>{
-    queue:Vec<EventType>,
-    listener:Map<EventType,&'a dyn Window<'a>>
+
+
+pub struct EventListener<'a>{
+    pub app:Rc<RefCell<MainApp<'a>>> ,
 }
-impl  EventQueue<'_>{
-    fn trigger(){
+
+
+impl  EventListener<'_>{
+
+    fn trigger(&self,event_type: EventType){
+        self.app.borrow_mut().top_window().process_event(event_type);
 
     }
 }

@@ -1,14 +1,13 @@
 use alloc::boxed::Box;
-use alloc::rc::Rc;
+
 use alloc::vec;
 use alloc::vec::Vec;
-use core::ops::Deref;
-use embedded_graphics_core::prelude::Point;
+use core::cell::RefCell;
+use embedded_graphics_core::prelude::DrawTarget;
 
-use crate::widgets::Widget;
-use crate::widgets::wrap::Wrap;
-use crate::windows::{menu_window::MenuWindow, Window};
 
+use crate::windows::{ Window};
+extern crate alloc;
 pub const SCREEN_WIDTH:i32 = 400;
 pub const SCREEN_HEIGHT:i32 = 300;
 
@@ -60,7 +59,7 @@ impl <'a> MainApp<'a>{
         self.is_pause = false;
     }
 
-    pub   fn run(&mut self){
+    pub fn run(&mut self){
         if !self.is_pause {
             if self.need_render {
                 self.top_window().draw();

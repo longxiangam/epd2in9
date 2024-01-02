@@ -8,7 +8,7 @@ use crate::widgets::label::Label;
 use crate::widgets::wrap::Wrap;
 use crate::windows::clock_window::ClockWindow;
 use crate::windows::Window;
-
+extern crate alloc;
 pub struct MenuWindow<'a>{
     pub root: Wrap,
     pub need_render:bool,
@@ -29,10 +29,6 @@ impl <'a> MenuWindow<'a> where 'a:'static{
             app,
         };
 
-
-        //
-
-
         window
     }
 
@@ -48,7 +44,7 @@ impl <'a> MenuWindow<'a> where 'a:'static{
 
 impl <'a> Window<'a> for MenuWindow<'a>{
     fn run(&self) {
-        todo!()
+
     }
 
     fn draw(&self) {
