@@ -3,6 +3,11 @@ use alloc::boxed::Box;
 use alloc::vec;
 use alloc::vec::Vec;
 use core::cell::RefCell;
+use embedded_graphics::mono_font::ascii::FONT_6X9;
+use embedded_graphics::mono_font::MonoTextStyleBuilder;
+use embedded_graphics::text::Text;
+use embedded_graphics_core::Drawable;
+use embedded_graphics_core::geometry::Point;
 use embedded_graphics_core::pixelcolor::BinaryColor;
 use embedded_graphics_core::prelude::DrawTarget;
 
@@ -17,16 +22,14 @@ pub struct MainApp<'a,D> where D: DrawTarget<Color = BinaryColor>{
     pub  window_stack:Vec<Box<dyn  Window<'a, D>> >,
     pub need_render:bool,
     pub is_pause:bool,
-    pub  display:D
 }
 
 impl <'a,D> MainApp<'a,D>  where D: DrawTarget<Color = BinaryColor> {
-    pub fn new(display:D) -> MainApp<'a,D> {
+    pub fn new() -> MainApp<'a,D> {
         let mut app = Self{
             window_stack:vec![],
             need_render:true,
             is_pause:false,
-            display,
         };
         app
 
@@ -62,11 +65,12 @@ impl <'a,D> MainApp<'a,D>  where D: DrawTarget<Color = BinaryColor> {
         self.is_pause = false;
     }
 
-    pub fn run(&mut self){
+    pub fn run(&mut self, display:&mut D){
         if !self.is_pause {
             if self.need_render {
                 let window = self.top_window();
-                window.draw(&mut self.display);
+                window.draw(display);
+
             }
 
             //self.top_window().run();
