@@ -66,7 +66,18 @@ impl <'a,D> Window<'a, D> for MenuWindow<'a,D>  where D: DrawTarget<Color =Binar
     }
 
     fn draw(&self,display:&mut D) {
+        let style = MonoTextStyleBuilder::new()
+            .font(&FONT_6X9)
+            .text_color(BinaryColor::On)
+            .background_color(BinaryColor::Off)
+            .build();
 
+        Text::new(
+            "This is a\nmultiline\nHello World!",
+            Point::new(15, 15),
+            style,
+        )
+            .draw(display);//.expect("绘制失败");
     }
 
 }

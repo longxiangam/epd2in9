@@ -103,17 +103,26 @@ fn main() -> ! {
     let busy_in = io.pins.gpio11.into_pull_up_input();
 
     let mut epd = Epd2in9::new(&mut spi, epd_cs, busy_in, epd_dc, epd_rst, &mut delay).unwrap();
-    let mut main_app: MainApp =  crate::app::MainApp::new();
+
+    let mut display: Display2in9 = Display2in9::default();
+    let mut main_app =  crate::MainApp::new();
     let rc = Rc::new(RefCell::new(main_app));
 
-    let window = Box::new(MenuWindow::new(rc.clone(), crate::app::SCREEN_WIDTH, crate::app::SCREEN_HEIGHT));
+    let window = Box::new(MenuWindow::new(rc.clone(), epd2in9::app::SCREEN_WIDTH, epd2in9::app::SCREEN_HEIGHT));
+
 
     rc.clone().borrow_mut().push(window);
 
-    let event_listener:EventListener = EventListener{app:rc.clone()};
+
+    //let event_listener:EventListener = EventListener{app:rc.clone()};
+
+
+    rc.clone().borrow_mut().run(&mut display);
+
+    //let event_listener:EventListener = EventListener{app:rc.clone()};
 
     loop {
-        rc.clone().borrow_mut().run();
+
         delay.delay_ms(500u32);
     }
 }

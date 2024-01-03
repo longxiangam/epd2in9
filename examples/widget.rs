@@ -34,7 +34,9 @@ fn main() -> Result<(), core::convert::Infallible> {
 
     let window = Box::new(MenuWindow::new(rc.clone(), epd2in9::app::SCREEN_WIDTH, epd2in9::app::SCREEN_HEIGHT));
 
-    rc.clone().borrow_mut().push(window);
+
+        rc.clone().borrow_mut().push(window);
+
 
     //let event_listener:EventListener = EventListener{app:rc.clone()};
 
